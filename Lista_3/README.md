@@ -5,11 +5,17 @@ Hello, imię !
 ```
 
 Program powinien obsługiwać przynajmniej następujące opcje:
+
 **-c, --capitalize** wypisanie imienia bądź słowa world wielką literą;
+
 **--color=[never | auto | always]** kolorowanie imion (nigdy, tylko gdy standardowy strumień wyjściowy jest konsolą, zawsze), por. podobną opcję programu ```ls(1)```;
+
 **-g text , --greeting=text** zastąpienie słowa Hello podanym tekstem;
+
 **-h, --help** wypisanie krótkiej ściągi;
+
 **-v, --version** wypisanie nazwy i wersji programu oraz copyrightu;
+
 **-w, --world** wypisanie dodatkowo wiersza ```Hello, world!```
 
 ## Zadanie 5
