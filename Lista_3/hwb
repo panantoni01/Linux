@@ -1,0 +1,80 @@
+#!/bin/bash
+
+GREEN='\033[1;32m'
+NC='\033[0m' # No Color
+
+cap=false
+greet="Hello, "
+world=false
+color='auto'
+
+# single ':' - required argument
+# double '::' - optional argument 
+
+OPTS=$(getopt -o chvwg: -l capitalize,help,version,world,greeting:,color: -- "$@")
+eval set -- "$OPTS"
+
+while true
+do
+	case "$1" in
+		-c|--capitalize)
+			cap=true
+			;;
+		-h|--help)
+			man hwb | cat
+			exit
+			;;
+		-v|--version)
+			printf "APokusinski 13.03.2021\nAll rights reserved\n"
+			exit
+			;;
+		-w|--world)
+			world=true
+			;;
+		-g|--greeting)
+			shift
+			greet="$1, "
+			;;
+		--color)
+			shift
+			color=$1
+			[[ ! $color =~ never|auto|always ]] && {
+           			echo "Incorrect options provided"
+            		exit 1
+        	}
+			# echo "Changing color to $color"	
+			;;						
+		--)
+			shift
+			break
+			;;
+		*) 
+			echo "Error occurred!" 
+			exit 1 
+			;;
+		esac
+		shift
+done
+
+$world && set -- "$@" 'world'
+
+for arg in "$@"
+do
+	$cap && arg="$(tr '[:lower:]' '[:upper:]' <<< ${arg:0:1})${arg:1}"
+	case $color in
+		auto)
+			if [ -t 1 ]
+			then
+				echo -e "$greet${GREEN}$arg${NC}!"
+			else
+				echo "$greet$arg!"
+			fi
+			;; 
+		never)
+			echo "$greet$arg!"
+			;;
+		always)
+			echo -e "$greet${GREEN}$arg${NC}!"
+			;;
+	esac
+done

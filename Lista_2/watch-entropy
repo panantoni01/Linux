@@ -1,0 +1,16 @@
+#!/bin/bash
+
+OLD_STTY=$(stty --save)
+stty -echo -icanon min 0
+
+char=''
+while [[ "$char" = "" ]] 
+do
+	entropy=$(cat /proc/sys/kernel/random/entropy_avail)
+	poolsize=$(cat /proc/sys/kernel/random/poolsize) 
+	echo -ne "Available entropy: "$(bc <<< "scale=5; $entropy/$poolsize" | sed 's/^\./0\./')"\r"
+	sleep 1
+	char=$(cat)
+done
+
+stty "$OLD_STTY";

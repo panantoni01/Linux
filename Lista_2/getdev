@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+
+if [ $# -eq 0 ]
+then
+	echo "usage: $0 <mount point>"
+else
+	mountpoint=$(rev <(echo "$1") | sed -r 's/^\/+(.+)/\1/' | rev)
+	sed 's/\s*#.*//g; /^ *$/d' /etc/fstab | grep "\s$mountpoint\s" | awk '{
+		print "Device: "$1"";
+		print "Filesystem type: "$3"";
+		print "Mount options: "$4"";
+		print "Dump frequency: "$5"";
+		print "Fsck pass number: "$6"";
+		}'
+fi

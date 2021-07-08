@@ -1,0 +1,49 @@
+.TH hwb 1
+.SH NAME
+hwb - print hello-world-like greeting 
+
+.SH SYNOPSIS
+.B hwb 
+[\fB-cwhv\fR] [\fB-g\fR \fItext\fR] [\fB--color\fR=\fIWHEN\fR] \fIARGS\fR...
+
+.SH DESCRIPTION
+.B hwb
+is a simple shell script, that prints a traditional greeting to standard output.
+
+.SH OPTIONS
+.TP
+.BR \-c ", " \-\-capitalize
+when written to the output, all arguments from \fIARGS\fR and optional 'world' (see \fB\-w\fR option) will begin with a capital letter
+.TP
+.BR \-\-color=\fIWHEN\fR
+colorize the output; WHEN can be 'always', 'auto' (default if omitted) , or 'never'; more info below
+.TP
+.BR \-g ", " \-\-greeting=\fItext\fR
+print \fItext\fR instead of standard "Hello" greeting
+.TP
+.BR \-h ", " \-\-help
+display this help and exit
+.TP
+.BR \-v ", " \-\-version
+display version and copyright information and exit
+.TP
+.BR \-w ", " \-\-world
+append the output with traditional "Hello, world!" greeting
+
+.SH EXIT STATUS
+The exit status is normally 0; if an error occurred, 1 is returned.
+
+.SH EXAMPLES
+The following example outputs a greeting for each argument specified.
+.PP
+.RS
+$ hwb -c -w name_1 Name_2
+.RE
+.PP
+Because \fB\-w\fR option is used, "Hello, World!" will be added at the end. Note, that all argument and the last 'world' will start with a capital letter, as \fB\-c\fR option is also used. 
+
+.SH BUGS
+Please report any bugs to this e-mail address: apokusinski@o2.pl
+
+.SH SEE ALSO
+\fBgetopt\fR(1), \fBecho\fR(1)

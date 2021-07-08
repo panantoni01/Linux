@@ -1,0 +1,5 @@
+#!/bin/bash
+
+exec 3<> /dev/tcp/example.org/80
+echo -en "GET / HTTP/1.1\r\nHost: example.org\r\nConnection: close\r\n\r\n" >&3
+cat <&3

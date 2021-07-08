@@ -1,0 +1,31 @@
+#!/bin/bash
+
+mkdir root
+cd root
+mkdir bin dev etc lib mnt proc sbin sys tmp var
+cd ..
+
+cp /home/antoni/Documents/Lato_2020-2021/Linux/Lista_9/sinit/sinit /home/antoni/Documents/Lato_2020-2021/Linux/Lista_9/root/init
+
+curl -L "https://www.busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-x86_64" >root/bin/busybox
+chmod +x root/bin/busybox
+cd root/bin
+# ln -s busybox mount
+# ln -s busybox sh
+cd ../../
+
+cat >>root/bin/rc.init << EOF
+#!/bin/busybox sh
+/bin/busybox --install -s /bin
+mount -t devtmpfs  devtmpfs  /dev
+mount -t proc      proc      /proc
+mount -t sysfs     sysfs     /sys
+mount -t tmpfs     tmpfs     /tmp
+exec /bin/sh
+EOF
+chmod +x root/bin/rc.init
+
+
+cd root
+find -print0 | cpio --null -v -o --format=newc | gzip -9 >../initramfs
+cd ..

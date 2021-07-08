@@ -1,0 +1,31 @@
+#!/bin/bash
+
+total_size=0
+i=0
+for file in "$@"
+do
+	j=0
+	for in_file in "$@"
+	do
+		if [[ $j == $i ]] # exclude the same file name 
+		then
+			((j++))
+			continue
+		else # check if file is subdirectory of / file in in_file
+			real1=$(realpath $file)
+        		real2=$(realpath $in_file)
+        		if [[ $real1 == "$real2"* ]]
+        		then
+                		echo "Error: given files/directories are not independent"
+				exit 1
+        		fi
+		fi
+	((j++)) 
+	
+	done
+	((i++))
+	((total_size+=$(du -s $file | awk '{print $1}')))
+done
+
+# echo $total_size
+df | awk -v tot=$total_size '(NR>1) {if ($4>tot) print $6}'

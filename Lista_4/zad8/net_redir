@@ -1,0 +1,4 @@
+#!/bin/bash
+port=${1:-5000}
+text=${2:-"Hello world"}
+echo -e $text > /dev/udp/127.0.0.1/$port

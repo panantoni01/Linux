@@ -1,0 +1,9 @@
+#!/bin/bash
+port=${1:-5000}
+while true                                           
+do
+	random_num=$(cat /dev/random | tr -dc 0-9 | head -c5)
+	echo $random_num > /dev/udp/127.0.0.1/$port
+	read -s -t 1 -n 1 char                       
+    [ $? -eq 0 ] && break                       
+ done

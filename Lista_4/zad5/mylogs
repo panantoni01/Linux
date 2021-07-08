@@ -1,0 +1,16 @@
+#!/bin/bash
+
+pipename=/tmp/mylogs.fifo
+[ -p $pipename ] || mkfifo $pipename
+
+while true
+do
+	if read line <$pipename; then
+        if [[ "$line" == 'quit' ]]; then
+            break
+        fi
+        echo $line
+	echo $(date +'%Y-%m-%d %H:%M:%S')
+	echo '--------------------------------'
+    fi
+done

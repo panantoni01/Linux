@@ -1,0 +1,8 @@
+#!/bin/bash
+
+while true
+do
+	echo "Remaining power: "$(bc <<< "scale=3; 100*$(cat /sys/class/power_supply/BAT0/energy_now)/$(cat /sys/class/power_supply/BAT0/energy_full)")" %"
+	read -s -t 5 -n 1 char
+	[ $? -eq 0 ] && break
+done

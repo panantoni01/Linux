@@ -1,0 +1,8 @@
+#!/bin/bash
+
+while true
+do
+	echo "Free memory: $(free | grep "^Mem*" | awk '{print $4}') bytes"
+	read -s -t 5 -n 1 char
+	[ $? -eq 0 ] && break
+done
