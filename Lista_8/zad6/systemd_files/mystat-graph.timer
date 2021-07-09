@@ -1,0 +1,10 @@
+[Unit]
+Description=Generate CPU usage graph
+Requires=mystat-graph.service
+
+[Timer]
+Unit=mystat-graph.service
+OnCalendar=minutely
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Generate CPU usage stats from mystat
+Wants=mystat-graph.timer
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /home/antoni/Documents/Lato_2020-2021/Linux/Lista_8/mystat_graph.sh
+
+[Install]
+WantedBy=multi-user.target
+

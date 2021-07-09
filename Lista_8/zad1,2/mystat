@@ -1,0 +1,27 @@
+#!/sbin/openrc-run
+
+command="/root/Linux/Lista_7/mystat"
+command_args="$MYSTAT_OPTS"
+pidfile="/run/${RC_SVCNAME}.pid"
+command_background=true
+extra_started_commands="rotate"
+description="Daemon collecting CPU usage statistics"
+supervisor="supervise-daemon"
+
+depend () {
+	need localmount procfs
+}
+
+rotate () {
+	ebegin "Rotating ${RC_SVCNAME}"
+	# start-stop-daemon --signal HUP --pidfile "${pidfile}"
+	${supervisor} ${RC_SVCNAME} --signal HUP --pidfile "${pidfile}" 
+	eend $?
+}
+
+start_pre () {
+	if ! [ -r /proc/stat ]; then
+		eerror "/proc/stat file doesnt exist!"
+		return 1
+	fi
+}

@@ -1,0 +1,9 @@
+## Zadanie 1
+Zapoznaj się z poleceniami **rc-service(8)**, **rc-update(8)**,
+**rc-status(8)**, **openrc-run(8)**, **openrc(8)** oraz **openrc-init(8)** i przygotuj krótkie omówienie zasad administrowania systemem OpenRC. W tym zadaniu ponownie wykorzystamy program *mystat* z zadania 3 z poprzedniej listy. Przygotuj odpowiedni init script ```/etc/init.d/mystat``` dla OpenRC. Skrypt powinien być zgodny z przyjętymi konwencjami (por. **openrc-run(8)**), zawierać odpowiednie informacje dla dependency-based boot, obsługiwać pid file w katalogu ```/run```, używać odpowiednich funkcji wbudowanych (einfo, ewarn, eend itp.) i programu **start-stop-daemon(8)**. Konfigurację demona (w tym argumenty dla opcji --period, --interval i --logfile) powinny być czytane z pliku konfiguracyjnego mystat umieszczonego w katalogu /etc/conf.d/. Poza standardowymi akcjami *start*, *stop* i *status* skrypt powinien dodatkowo obsługiwać opcję *rotate*, która powoduje wysłanie do demona *mystat* sygnału SIGHUP. Za pomocą programu **rc-update(8)** zainstaluj serwis *mystat* w OpenRC tak, by był uruchamiany podczas startu systemu.
+
+## Zadanie 2
+Zmodyfikuj instalację z zadania 1 tak, aby demon *mystat* był uruchamiany za pomocą **supervise-daemon(8)**. Zabij demona *mystat* (SIGKILL) i zobacz, że natychmiast odrodzi się (choć z innym PID-em).
+
+## Zadanie 6
+Przygotuj jednostkę SystemD *mystat.service* uruchamiającą demona *mystat* w systemie zarządzanym za pomocą SystemD. Skonfiguruj system tak, by demon *mystat* uruchamiał się wraz z sysinit.target. Przygotuj także jednostkę *mystat-graph.timer*, która raz na dobę uruchamia skrypt, który tworzy w katalogu ```/var/lib/mystat``` plik PNG zawierający wykres obciążenia maszyny w ciągu ostatnich 24 godzin. Do wygenerowania wykresu użyj programu MRTG lub np. Gnuplot.

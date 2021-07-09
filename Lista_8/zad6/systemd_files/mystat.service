@@ -1,0 +1,14 @@
+[Unit]
+Description=Daemon collecting CPU usage stats
+After=-.mount
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/
+ExecStart=/home/antoni/Documents/Lato_2020-2021/Linux/Lista_7/mystat
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=sysinit.target
